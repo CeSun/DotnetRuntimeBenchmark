@@ -1,7 +1,7 @@
 ﻿// coreclr.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
 //
 
-#define CORECLR 0
+#define CORECLR 1
 
 #include <iostream>
 #include <Windows.h>
@@ -11,14 +11,13 @@
 int main()
 {
 #if CORECLR
-	//auto HostFxrPath = TEXT("coreclr_runtime/hostfxr.dll");
+	auto HostFxrPath = TEXT("coreclr_runtime/hostfxr.dll");
 	auto RuntimeConfigPath = TEXT("coreclr_runtime/dotnet.runtimeconfig.json");
 #else
-	//auto HostFxrPath = TEXT("mono_runtime/hostfxr.dll");
+	auto HostFxrPath = TEXT("mono_runtime/hostfxr.dll");
 	auto RuntimeConfigPath = TEXT("mono_runtime/dotnet.runtimeconfig.json");
 #endif // CORECLR
 
-	auto HostFxrPath = TEXT("coreclr_runtime/hostfxr.dll");
 	auto h = ::LoadLibraryW(HostFxrPath);
 	auto InitializeFunPtr = (hostfxr_initialize_for_runtime_config_fn)::GetProcAddress(h, "hostfxr_initialize_for_runtime_config");
 	auto GetDelegateFunPtr = (hostfxr_get_runtime_delegate_fn)::GetProcAddress(h, "hostfxr_get_runtime_delegate");
